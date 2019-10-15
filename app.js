@@ -41,6 +41,8 @@ const initializeNewProductButtons = () => {
     });
 };
 
-document.querySelector('confirm-button').addEventListener('click', initializeNewProductButtons);
+const confirmButton = document.getElementById('confirm-button');
+
+confirmButton.addEventListener('click', initializeNewProductButtons);
 
 initializeNewProductButtons();
