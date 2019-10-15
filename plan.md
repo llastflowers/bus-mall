@@ -44,3 +44,16 @@ FLOW CHARTS:
 2. next round > NEW three items appear
 3. 1 and 2 loop to 25 >
 4. 25 selections are made > further selections are disabled and results are displayed
+
+Baby Steps:
+
+1. Make product inventory
+2. Make array of products
+3. Get products from array
+4. Display random products on page
+5. Remove possibility for duplicates in set of images
+6. Remove possibility for duplicates in consecutive sets of images
+7. Store product selection
+8. Disable exercise after 25 selections
+9. Display data from 25 selections
+10. Profit???
