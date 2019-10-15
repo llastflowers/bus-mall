@@ -90,7 +90,7 @@ export const testProductData = [
 
         id: 'petsweep',
         name: 'Pet Dust Boots',
-        image: '../assets/petsweep.jpg',
+        image: '../assets/pet-sweep.jpg',
         description: 'You pet can wear these dust boots around the house. They probably clean super well. Your pet will hate them!',
         category: 'pet'
     },
@@ -113,7 +113,7 @@ export const testProductData = [
 
         id: 'sweep',
         name: 'Baby Dust Mop Onesie',
-        image: '../assets/sweep.jpg',
+        image: '../assets/sweep.png',
         description: 'Your baby can wear this onesie while he crawls around on your nasty dusty floor and then your baby will be covered in the nasty dust. Capital!',
         category: 'apparel'
     },
