@@ -3,7 +3,12 @@ import { ProductArray } from './src/productArray.js';
 
 const productImages = document.querySelectorAll('img');
 const productRadios = document.querySelectorAll('input');
-// const productName = document.getElementById('name');
+const productName1 = document.getElementById('name1');
+const productName2 = document.getElementById('name2');
+const productName3 = document.getElementById('name3');
+const productDesc1 = document.getElementById('desc1');
+const productDesc2 = document.getElementById('desc2');
+const productDesc3 = document.getElementById('desc3');
 const products = new ProductArray(testProductData);
 
 const initializeNewProductButtons = () => {
@@ -39,7 +44,18 @@ const initializeNewProductButtons = () => {
             radioTag.src = randomProduct3.id;
         }
     });
+
+    productName1.textContent = randomProduct.name;
+    productName2.textContent = randomProduct2.name;
+    productName3.textContent = randomProduct3.name;
+
+    productDesc1.textContent = randomProduct.description;
+    productDesc2.textContent = randomProduct2.description;
+    productDesc3.textContent = randomProduct3.description;
+
 };
+
+// productName.textContent = (testProductData.name);
 
 const confirmButton = document.getElementById('confirm-button');
 

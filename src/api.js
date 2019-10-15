@@ -81,7 +81,7 @@ export const testProductData = [
     {
 
         id: 'pen',
-        name: 'Flatwear Pens',
+        name: 'Flatware Pens',
         image: '../assets/pen.jpg',
         description: 'Pens with flatware-shaped caps. You can write with them and also eat with them!',
         category: 'office'
