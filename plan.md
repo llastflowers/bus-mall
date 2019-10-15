@@ -1,4 +1,4 @@
-# bus-mall
+TECHNICAL PLAN
 
 What pages need to be created?
 
