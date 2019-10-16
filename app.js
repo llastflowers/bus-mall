@@ -1,5 +1,7 @@
 import { testProductData } from './src/api.js';
 import { ProductArray } from './src/productArray.js';
+import { getStats } from './src/utils.js';
+// import {}
 
 const productImages = document.querySelectorAll('img');
 const productRadios = document.querySelectorAll('input');
@@ -55,10 +57,21 @@ const initializeNewProductButtons = () => {
 
 };
 
-// productName.textContent = (testProductData.name);
-
 const confirmButton = document.getElementById('confirm-button');
 
 confirmButton.addEventListener('click', initializeNewProductButtons);
 
 initializeNewProductButtons();
+
+// confirmButton.value = userSelection.id;
+// confirmButton.addEventListener('click,' () => {
+//     let storedStats = getStats();
+//     if (!storedStats) {
+//         startBlankStats();
+//         storedStats = getStats();
+//     }
+
+//     increaseSelectedProductById(product.id, storedStats);
+
+//     setStats(storedStats);
+// });

@@ -8,7 +8,7 @@
 
 body {
     color: rgb(112, 81, 112);
-    margin: 3% 15%;
+    margin: 1% 20%;
     text-align: center;
     background-color: lavenderblush;
 }
@@ -26,14 +26,9 @@ h5 {
     font-style: italic;
     letter-spacing: 2px;
     margin-top: 0;
-    margin-bottom: 5%;
+    margin-bottom: 4%;
     padding: 0;
 }
-
-/* header {
-    
-} */
-
 
 .selection-area {
     font-family: 'Roboto Condensed', sans-serif;
@@ -55,7 +50,6 @@ p {
     font-weight: lighter;
     font-size: 16px;
     width: 300px;
-    /* text-align: left; */
 }
 
 .product-images {
@@ -69,7 +63,7 @@ input:checked + .radio-image {
 }
 
 img {
-    margin: 20px;
+    margin: 0px 20px;
     width: 300px;
     height: 300px;
     background-position: 50% 50%;
