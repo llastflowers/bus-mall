@@ -1,7 +1,7 @@
 import { testProductData } from './src/api.js';
 import { ProductArray } from './src/productArray.js';
-import { getStats } from './src/utils.js';
-// import {}
+import { findById } from './src/utils.js';
+import store from './src/storage.js';
 
 const productImages = document.querySelectorAll('img');
 const productRadios = document.querySelectorAll('input');
@@ -11,22 +11,25 @@ const productName3 = document.getElementById('name3');
 const productDesc1 = document.getElementById('desc1');
 const productDesc2 = document.getElementById('desc2');
 const productDesc3 = document.getElementById('desc3');
-const products = new ProductArray(testProductData);
+const productsList = new ProductArray(testProductData);
+const confirmButton = document.getElementById('confirm-button');
+
+let totalRounds = 0;
 
 const initializeNewProductButtons = () => {
     
-    const randomProduct = products.getRandomProduct();
-    let randomProduct2 = products.getRandomProduct();
-    let randomProduct3 = products.getRandomProduct();
-
+    const randomProduct = productsList.getRandomProduct();
+    let randomProduct2 = productsList.getRandomProduct();
+    let randomProduct3 = productsList.getRandomProduct();
+    
     while (randomProduct.id === randomProduct2.id) {
-        randomProduct2 = products.getRandomProduct();
+        randomProduct2 = productsList.getRandomProduct();
     }
-
+    
     while (randomProduct.id === randomProduct3.id || randomProduct2.id === randomProduct3.id) {
-        randomProduct3 = products.getRandomProduct();
+        randomProduct3 = productsList.getRandomProduct();
     }
-
+    
     productImages.forEach((imageTag, i) => {
         if (i === 0) {
             imageTag.src = randomProduct.image;
@@ -38,40 +41,40 @@ const initializeNewProductButtons = () => {
     });
     
     productRadios.forEach((radioTag, i) => {
+        
         if (i === 0) {
-            radioTag.src = randomProduct.id;
+            radioTag.value = randomProduct.id;
         } else if (i === 1) {
-            radioTag.src = randomProduct2.id;
+            radioTag.value = randomProduct2.id;
         } else if (i === 2) {
-            radioTag.src = randomProduct3.id;
+            radioTag.value = randomProduct3.id;
         }
     });
+
+    randomProduct.shownCount++;
+    randomProduct2.shownCount++;
+    randomProduct3.shownCount++;
 
     productName1.textContent = randomProduct.name;
     productName2.textContent = randomProduct2.name;
     productName3.textContent = randomProduct3.name;
-
+    
     productDesc1.textContent = randomProduct.description;
     productDesc2.textContent = randomProduct2.description;
     productDesc3.textContent = randomProduct3.description;
-
+    
 };
 
-const confirmButton = document.getElementById('confirm-button');
-
-confirmButton.addEventListener('click', initializeNewProductButtons);
+confirmButton.addEventListener('click', () => {
+    event.preventDefault();
+    const radioChoice = document.querySelector('input:checked').value;
+    let userSelectedProduct = productsList.getProductById(radioChoice);
+    userSelectedProduct.clickedCount++;
+    initializeNewProductButtons();
+    totalRounds++;
+    
+    //if statement "if total rounds >24 redirect, display results"
+    
+});
 
 initializeNewProductButtons();
-
-// confirmButton.value = userSelection.id;
-// confirmButton.addEventListener('click,' () => {
-//     let storedStats = getStats();
-//     if (!storedStats) {
-//         startBlankStats();
-//         storedStats = getStats();
-//     }
-
-//     increaseSelectedProductById(product.id, storedStats);
-
-//     setStats(storedStats);
-// });

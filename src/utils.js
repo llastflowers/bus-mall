@@ -1,7 +1,4 @@
-const blankStats = [];
-export const storedStats = 'stats';
-
-export const getById = (id, products) => {
+export const findById = (id, products) => {
     let matchingProduct;
     products.forEach = (product => {
 
