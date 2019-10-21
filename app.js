@@ -56,10 +56,6 @@ const initializeNewProductButtons = () => {
         }
     });
 
-    randomProduct.shownCount++;
-    randomProduct2.shownCount++;
-    randomProduct3.shownCount++;
-
     productName1.textContent = randomProduct.name;
     productName2.textContent = randomProduct2.name;
     productName3.textContent = randomProduct3.name;
@@ -67,10 +63,12 @@ const initializeNewProductButtons = () => {
     productDesc1.textContent = randomProduct.description;
     productDesc2.textContent = randomProduct2.description;
     productDesc3.textContent = randomProduct3.description;
-    
-};
 
-initializeNewProductButtons();
+    randomProduct.shownCount++;
+    randomProduct2.shownCount++;
+    randomProduct3.shownCount++;
+
+};
 
 function trackProductsShown(productId) {
     let shown = compare(productsShown, productId);
@@ -86,7 +84,7 @@ function trackProductsShown(productId) {
     
     const json = JSON.stringify(productsShown);
     localStorage.setItem('productsShown', json);
-    
+
 }
 
 function trackProductsClicked(productsSelected, productId) {
@@ -100,7 +98,7 @@ function trackProductsClicked(productsSelected, productId) {
     } else {
         found.clickedCount++;
     }
-    
+
     const json = JSON.stringify(productsSelected);
     localStorage.setItem('productsSelected', json);
 }
@@ -148,7 +146,7 @@ const parsedShownArray = JSON.parse(localStorage.productsShown);
 const parsedUserSelectedArray = JSON.parse(localStorage.productsSelected);
 
 const myIds = convertIdArray(parsedShownArray);
-const mydata = convertShownData(parsedShownArray);
+const myData = convertShownData(parsedShownArray);
 const selects = convertClickData(parsedUserSelectedArray);
 
 function createChart() {
@@ -159,12 +157,12 @@ function createChart() {
             datasets: [{
                 label: 'Products Selected',
                 data: selects,
-                backgroundColor: 'red'
+                backgroundColor: 'green'
             },
             {
                 label: 'Products Shown',
-                data: mydata,
-                backgroundColor: 'blue'
+                data: myData,
+                backgroundColor: 'purple'
             }]
         },
         options: {
@@ -179,3 +177,5 @@ function createChart() {
     });
     return myChart;
 }
+
+initializeNewProductButtons();

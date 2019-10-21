@@ -99,7 +99,7 @@ button:active {
 }
 
 .result-section {
-
+    margin: 0 auto;
 }
 
 canvas {
