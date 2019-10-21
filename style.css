@@ -58,7 +58,7 @@ p {
     justify-content: center;
 }
 
-input:checked + .radio-image {
+input:hover + .radio-image {
     box-shadow: 1px 1px 25px 5px rgb(97, 73, 97);
 }
 
@@ -97,6 +97,15 @@ button:active {
     background-color: rgb(112, 81, 112);
     color: white;
 }
+
+.result-section {
+
+}
+
+canvas {
+    width: 75%;
+    height: 500px;
+  }
 
 footer {
     font-family: 'Roboto Condensed', sans-serif;

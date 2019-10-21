@@ -1,7 +1,6 @@
 import { testProductData } from './src/api.js';
 import { ProductArray } from './src/productArray.js';
-import { findById } from './src/utils.js';
-import store from './src/storage.js';
+import { compare } from './src/utils.js';
 
 const productImages = document.querySelectorAll('img');
 const productRadios = document.querySelectorAll('input');
@@ -11,32 +10,38 @@ const productName3 = document.getElementById('name3');
 const productDesc1 = document.getElementById('desc1');
 const productDesc2 = document.getElementById('desc2');
 const productDesc3 = document.getElementById('desc3');
-const productsList = new ProductArray(testProductData);
-const confirmButton = document.getElementById('confirm-button');
+const productArea = document.getElementById('product-selection');
+const resultArea = document.getElementById('result-section');
+const products = new ProductArray(testProductData);
 
+let productsSelected = [];
+let productsShown = [];
 let totalRounds = 0;
 
 const initializeNewProductButtons = () => {
     
-    const randomProduct = productsList.getRandomProduct();
-    let randomProduct2 = productsList.getRandomProduct();
-    let randomProduct3 = productsList.getRandomProduct();
+    const randomProduct = products.getRandomProduct();
+    let randomProduct2 = products.getRandomProduct();
+    let randomProduct3 = products.getRandomProduct();
     
     while (randomProduct.id === randomProduct2.id) {
-        randomProduct2 = productsList.getRandomProduct();
+        randomProduct2 = products.getRandomProduct();
     }
     
     while (randomProduct.id === randomProduct3.id || randomProduct2.id === randomProduct3.id) {
-        randomProduct3 = productsList.getRandomProduct();
+        randomProduct3 = products.getRandomProduct();
     }
     
     productImages.forEach((imageTag, i) => {
         if (i === 0) {
             imageTag.src = randomProduct.image;
+            trackProductsShown(randomProduct.id);
         } else if (i === 1) {
             imageTag.src = randomProduct2.image;
+            trackProductsShown(randomProduct2.id);
         } else if (i === 2) {
             imageTag.src = randomProduct3.image;
+            trackProductsShown(randomProduct3.id);
         }
     });
     
@@ -65,16 +70,112 @@ const initializeNewProductButtons = () => {
     
 };
 
-confirmButton.addEventListener('click', () => {
-    event.preventDefault();
-    const radioChoice = document.querySelector('input:checked').value;
-    let userSelectedProduct = productsList.getProductById(radioChoice);
-    userSelectedProduct.clickedCount++;
-    initializeNewProductButtons();
-    totalRounds++;
+initializeNewProductButtons();
+
+function trackProductsShown(productId) {
+    let shown = compare(productsShown, productId);
+    if (!shown) {
+        shown = {
+            id: productId,
+            shownCount: 1,
+        };
+        productsShown.push(shown);
+    } else {
+        shown.shownCount++;
+    }
     
-    //if statement "if total rounds >24 redirect, display results"
+    const json = JSON.stringify(productsShown);
+    localStorage.setItem('productsShown', json);
     
+}
+
+function trackProductsClicked(productsSelected, productId) {
+    let found = products.getProductById(productsSelected, productId);
+    if (!found) {
+        found = {
+            id: productId,
+            clickedCount: 1,
+        };
+        productsSelected.push(found);
+    } else {
+        found.clickedCount++;
+    }
+    
+    const json = JSON.stringify(productsSelected);
+    localStorage.setItem('productsSelected', json);
+}
+
+productRadios.forEach((radioTag) => {
+    radioTag.addEventListener('click', (event) => {
+        trackProductsClicked(productsSelected, event.target.value);
+        initializeNewProductButtons();
+        totalRounds++;
+        
+        if (totalRounds > 24) {
+            productArea.classList.add('hidden');
+            resultArea.classList.remove('hidden');
+            createChart();
+        }
+    });
 });
 
-initializeNewProductButtons();
+function convertShownData(array) {
+    const returnShownData = [];
+    array.forEach(element => {
+        returnShownData.push(element.shownCount);
+    });
+    returnShownData;
+}
+
+function convertClickData(array) {
+    const returnClickData = [];
+    array.forEach(element => {
+        returnClickData.push(element.clickedCount);
+    });
+    returnClickData;
+}
+
+function convertIdArray(array) {
+    const returnId = [];
+    array.forEach(element => {
+        returnId.push(element.id);
+    });
+    return returnId;
+} 
+
+const ctx = document.getElementById('chart').getContext('2d');
+const parsedShownArray = JSON.parse(localStorage.productsShown);
+const parsedUserSelectedArray = JSON.parse(localStorage.productsSelected);
+
+const myIds = convertIdArray(parsedShownArray);
+const mydata = convertShownData(parsedShownArray);
+const selects = convertClickData(parsedUserSelectedArray);
+
+function createChart() {
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: myIds,
+            datasets: [{
+                label: 'Products Selected',
+                data: selects,
+                backgroundColor: 'red'
+            },
+            {
+                label: 'Products Shown',
+                data: mydata,
+                backgroundColor: 'blue'
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    return myChart;
+}
