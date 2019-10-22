@@ -1,5 +1,5 @@
 import { testProductData } from './src/api.js';
-import { ProductArray } from './src/productArray.js';
+import { ProductArray } from './src/ProductArray.js';
 import { compare } from './src/utils.js';
 
 const productImages = document.querySelectorAll('img');
@@ -92,11 +92,11 @@ function trackProductsClicked(productsSelected, productId) {
     if (!found) {
         found = {
             id: productId,
-            clickedCount: 1,
+            selected: 1,
         };
         productsSelected.push(found);
     } else {
-        found.clickedCount++;
+        found.selected++;
     }
 
     const json = JSON.stringify(productsSelected);
@@ -140,7 +140,7 @@ function convertShownData(array) {
 function convertClickData(array) {
     const returnClickData = [];
     array.forEach(element => {
-        returnClickData.push(element.clickedCount);
+        returnClickData.push(element.selected);
     });
     return returnClickData;
 }
@@ -159,21 +159,21 @@ function createChart() {
     const parsedUserSelectedArray = JSON.parse(localStorage.productsSelected);
     const dataArray = mergeArrays(parsedShownArray, parsedUserSelectedArray);
     const myIds = convertIdArray(dataArray);
-    const myData = convertShownData(dataArray);
-    const selects = convertClickData(dataArray);
+    const SELECTED = convertClickData(dataArray);
+    const SHOWN = convertShownData(dataArray);
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: myIds,
             datasets: [{
                 label: 'Products Selected',
-                data: selects,
-                backgroundColor: 'green'
+                data: SELECTED,
+                backgroundColor: 'rgba(112, 81, 112, 0.9)'
             },
             {
                 label: 'Products Shown',
-                data: myData,
-                backgroundColor: 'purple'
+                data: SHOWN,
+                backgroundColor: 'rgba(112, 81, 112, 0.5)'
             }]
         },
         options: {

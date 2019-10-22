@@ -2,9 +2,9 @@ export class ProductArray {
     constructor(products) {
         this.products = products.slice();
     }
-    getProductById(someId) {
+    getProductById(products, someId) {
         let productMatch;
-        this.products.forEach(product => {
+        products.forEach(product => {
             if (someId === product.id) {
                 productMatch = product;
             }

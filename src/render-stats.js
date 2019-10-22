@@ -1,1 +1,0 @@
-// render stats on results page function
