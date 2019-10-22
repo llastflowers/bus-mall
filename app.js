@@ -100,7 +100,7 @@ function trackProductsClicked(productsSelected, productId) {
     }
 
     const json = JSON.stringify(productsSelected);
-    localStorage.setItem(productsSelected, json);
+    localStorage.setItem('productsSelected', json);
 }
 
 productRadios.forEach((radioTag) => {
