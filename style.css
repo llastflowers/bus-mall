@@ -107,6 +107,10 @@ canvas {
     height: 500px;
   }
 
+.hidden {
+    display: none;
+}
+
 footer {
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: lighter;

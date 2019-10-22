@@ -100,7 +100,7 @@ function trackProductsClicked(productsSelected, productId) {
     }
 
     const json = JSON.stringify(productsSelected);
-    localStorage.setItem('productsSelected', json);
+    localStorage.setItem(productsSelected, json);
 }
 
 productRadios.forEach((radioTag) => {
@@ -117,12 +117,24 @@ productRadios.forEach((radioTag) => {
     });
 });
 
+function mergeArrays(shownArray, selectedArray) {
+    const returnMergedArray = [];
+    shownArray.forEach(element => {
+
+        const mergedItem = element;
+        const selectedObject = products.getProductById(selectedArray, mergedItem.id) || { selected: 0 };
+        mergedItem.selected = selectedObject.selected;
+        returnMergedArray.push(mergedItem);
+    });
+    return returnMergedArray;
+}
+
 function convertShownData(array) {
     const returnShownData = [];
     array.forEach(element => {
         returnShownData.push(element.shownCount);
     });
-    returnShownData;
+    return returnShownData;
 }
 
 function convertClickData(array) {
@@ -130,7 +142,7 @@ function convertClickData(array) {
     array.forEach(element => {
         returnClickData.push(element.clickedCount);
     });
-    returnClickData;
+    return returnClickData;
 }
 
 function convertIdArray(array) {
@@ -141,15 +153,14 @@ function convertIdArray(array) {
     return returnId;
 } 
 
-const ctx = document.getElementById('chart').getContext('2d');
-const parsedShownArray = JSON.parse(localStorage.productsShown);
-const parsedUserSelectedArray = JSON.parse(localStorage.productsSelected);
-
-const myIds = convertIdArray(parsedShownArray);
-const myData = convertShownData(parsedShownArray);
-const selects = convertClickData(parsedUserSelectedArray);
-
 function createChart() {
+    const ctx = document.getElementById('chart').getContext('2d');
+    const parsedShownArray = JSON.parse(localStorage.productsShown);
+    const parsedUserSelectedArray = JSON.parse(localStorage.productsSelected);
+    const dataArray = mergeArrays(parsedShownArray, parsedUserSelectedArray);
+    const myIds = convertIdArray(dataArray);
+    const myData = convertShownData(dataArray);
+    const selects = convertClickData(dataArray);
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
